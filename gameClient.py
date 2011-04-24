@@ -6,9 +6,7 @@ gameClient.py
 TEAM getHead()
 
 
-
 """
-
 
 import sys
 import os
@@ -23,6 +21,10 @@ import subprocess
 import zipfile
 
 OWN_IP = socket.gethostbyname(socket.gethostname())
+if OWN_IP == '127.0.0.1':
+	own = socket.gethostbyname_ex(socket.gethostname())[2]
+	print own
+
 GAME_SERVER = sys.argv[1]
 PORT = 7772
 #PORT = sys.argv[2]			TODO
