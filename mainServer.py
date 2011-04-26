@@ -60,6 +60,7 @@ FILLED_GAMES = { "FOO":"bar"}
 TOTAL_SLOTS = { "FOO":"bar" }
 OPEN_GAMES = { "FOO":"bar"}
 OPEN_SLOTS = { "FOO":"bar"}
+FILLED_SLOTS = { "FOO":"bar"}
 GAME_LIST = []
 
 #XML server functions
