@@ -169,6 +169,7 @@ def main():
 				pass
 			
 		except (KeyboardInterrupt, SystemExit):
+			proxy.killGameInstance(OWN_IP,"all")
 			proxy.disconnect(OWN_IP)
 			exit(0)
 
