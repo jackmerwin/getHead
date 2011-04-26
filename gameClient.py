@@ -126,6 +126,8 @@ def main():
 						joinString = 'python ZombieTest.py '+join+' '+str(players)
 					elif game == 'SingleZombies':
 						joinString = 'python SingleZombies.py '+join+' '+str(players)
+					elif game == 'Pong':
+						joinString = 'python pong.py '+join
 					
 					p = subprocess.Popen(joinString, shell=True)
 					p.wait()
@@ -144,6 +146,10 @@ def main():
 						gameString = 'python ZombieHost.py '+OWN_IP+' '+players
 					elif selection == 'SingleZombies':
 						gameString = 'python SingleZombies.py '+OWN_IP+' '+players
+					elif selection == 'Pong':
+						gameString = 'python pong.py '+OWN_IP
+						players = '4'
+					
 					proxy.registerGameInstance(OWN_IP,selection,players)
 					print "Starting instance of of '" + selection +"'\n"
 					p = subprocess.Popen(gameString, shell=True)
