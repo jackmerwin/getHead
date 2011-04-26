@@ -110,8 +110,10 @@ class MatchMaker(object):
 	
 	#USER JOIN GAME / MATCHMAKER
 	def joinGameInstance(self,hostname):
-		OPEN_SLOTS[hostname] = int(OPEN_SLOTS[hostname])-1
-		if OPEN_SLOTS[hostname] == 0:
+		game = OPEN_GAMES[hostname]
+		players = TOTAL_SLOTS[hostname]
+		FILLED_SLOTS[hostname] = FILLED_SLOTS[hostname]+1
+		if OPEN_SLOTS[hostname] == FILLED_SLOTS[hostname]:
 			FILLED_GAMES[hostname] = OPEN_GAMES[hostname]
 			try:
 				del OPEN_SLOTS[hostname]
@@ -121,17 +123,15 @@ class MatchMaker(object):
 				del OPEN_GAMES[hostname]
 			except:
 				pass
-			return FILLED_GAMES[hostname]
-		else:
-			game = OPEN_GAMES[hostname]
-			players = TOTAL_SLOTS[hostname]
-			return game,players
+
+		return game,players
 	
 	#USER CREATE GAME INSTANCE
 	def registerGameInstance(self,hostname,gameFile,players):
 		OPEN_GAMES[hostname] = gameFile
 		OPEN_SLOTS[hostname] = int(players)
 		TOTAL_SLOTS[hostname] = int(players)
+		FILLED_SLOTS[hostname] = 1
 		print 'Game '+gameFile+' started by '+hostname
 		return 1
 	
@@ -184,6 +184,7 @@ def main():
 	GAME_LIST.append('SingleZombies')
 	GAME_LIST.append('ZombieTest')
 	GAME_LIST.append('Bomberman')
+	GAME_LIST.append('Pong')
 
 	''' start XML server '''
 	xmlserver().start()
