@@ -22,8 +22,7 @@ import zipfile
 
 OWN_IP = socket.gethostbyname(socket.gethostname())
 if OWN_IP == '127.0.0.1':
-	own = socket.gethostbyname_ex(socket.gethostname())[2]
-	print own
+	OWN_IP = socket.gethostbyname_ex(socket.gethostname())[2][0]
 
 GAME_SERVER = sys.argv[1]
 PORT = 7772
@@ -114,7 +113,7 @@ def main():
 				for game in openGames:
 					print "instance of "+openGames[game]+" being run by "+game+" with "+str(openSlots[game])+" slots"
 				print '\n'
-				print "\nTo join a game, type the hostname, or type '0' to skip"
+				print "\nTo join a game, type the hostname ('0' to cancel):"
 				join = raw_input(':: ')
 				if join == '0':
 					pass
@@ -127,24 +126,29 @@ def main():
 						joinString = 'python ZombieTest.py '+join+' '+str(players)
 					elif game == 'SingleZombies':
 						joinString = 'python SingleZombies.py '+join+' '+str(players)
+					
 					p = subprocess.Popen(joinString, shell=True)
 					p.wait()
 			
 			#HOST GAME
 			elif choice == '4':
-				selection = raw_input('Please enter the name of the game you wish to host: ')
-				players = raw_input('Please enter the number of players (max 4): ')
-				if selection == 'Bomberman':
-					gameString = 'python Host.py '+OWN_IP+' '+players
-				elif selection == 'ZombieTest':
-					gameString = 'python ZombieHost.py '+OWN_IP+' '+players
-				elif selection == 'SingleZombies':
-					gameString = 'python SingleZombies.py '+OWN_IP+' '+players
-				proxy.registerGameInstance(OWN_IP,selection,players)
-				print "Starting instance of of '" + selection +"'\n"
-				p = subprocess.Popen(gameString, shell=True)
-				p.wait()
-				proxy.killGameInstance(OWN_IP,selection)
+				selection = raw_input("Please enter the name of the game you wish to host ('0' to cancel): ")
+				if selection == '0':
+					print '\n'
+					pass
+				else:
+					players = raw_input('Please enter the number of players (max 4): ')
+					if selection == 'Bomberman':
+						gameString = 'python Host.py '+OWN_IP+' '+players
+					elif selection == 'ZombieTest':
+						gameString = 'python ZombieHost.py '+OWN_IP+' '+players
+					elif selection == 'SingleZombies':
+						gameString = 'python SingleZombies.py '+OWN_IP+' '+players
+					proxy.registerGameInstance(OWN_IP,selection,players)
+					print "Starting instance of of '" + selection +"'\n"
+					p = subprocess.Popen(gameString, shell=True)
+					p.wait()
+					proxy.killGameInstance(OWN_IP,selection)
 			
 			#DISCONNECT
 			elif choice == '5':

@@ -90,7 +90,7 @@ class MatchMaker(object):
 			print 'attempted access of '+gameFile+' by '+hostname+' not in GAME_LIST'
 			return 0
 		try:
-			s3 = S3Connection('XXX', 'XXX')
+			s3 = S3Connection('AKIAJ453E3WNIY4NP6NA', '0uH+t1HtlO6bNSOfoflJV0iOigJQ6LpSYNOTcRCJ')
 			b = s3.create_bucket('362.merwin.jack')
 			fileKey = Key(b)
 			fileKey.key = '362/getHead/'+gameFile+'.zip'
@@ -178,6 +178,8 @@ def main():
 
 	print "Starting getHead() server on AWS internal IP: "+HOST+"..."
 
+	del OPEN_GAMES["FOO"]
+	
 	''' create list of games server is making available'''
 	GAME_LIST.append('SingleZombies')
 	GAME_LIST.append('ZombieTest')
